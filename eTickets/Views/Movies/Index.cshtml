@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<Movie>
 
 @{
-    ViewData["Title"] = "List of Movies";
+    ViewData["Title"] = "Danh sách Phim";
 }
 
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-md-4 col-xs-6 border-primary mb-3">
-            <div class="card mb-3" style="max-width: 540px;">
+        <div class="col-md-3 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 370px;">
                 <div class="row g-0">
                     <div class="col-md-12">
-                        <div class="card-header text-white bg-info">
+                        <div class="card-header text-white" style="background-color: #59554D !important; overflow: hidden;">
                             <p class="card-text">
-                                <h5 class="card-title">
+                                <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     @item.Name
                                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                     {
@@ -23,45 +23,59 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <img src="@item.ImageURL" width="100%" alt="@item.Name">
+                    <div class="col-md-12">
+                        <img src="@item.ImageURL" width="100%" alt="@item.Name" style="height: 550px !important">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card-body">
-                            <p class="card-text">@item.Description</p>
-                            <p class="card-text"><b>Cinema: </b>@item.Cinema.Name</p>
-                            <p class="card-text"><b>Category: </b>@item.MovieCategory</p>
-                            <p class="card-text"><b>Start Date: </b>@item.StartDate.ToString("dd MMM yy")</p>
-                            <p class="card-text"><b>End Date: </b>@item.EndDate.ToString("dd MMM yy")</p>
+                            <table class="col-md-12 ">
+                                <tr>
+                                    <th class="card-text">Rạp chiếu</th>
+                                    <th class="card-text">Thể loại</th>
+                                </tr>
+                                <tr>
+                                    <td class="card-text">@item.Cinema.Name</td>
+                                    <td class="card-text">@item.MovieCategory</td>
+                                </tr>
+                                <tr>
+                                    <th class="card-text">Khởi chiếu</th>
+                                    <th class="card-text">Kết thúc</th>
+                                </tr>
+                                <tr>
+                                    <td class="card-text">@item.StartDate.ToString("dd MMM yy")</td>
+                                    <td class="card-text">@item.EndDate.ToString("dd MMM yy")</td>
+                                </tr>
+                            </table>
                             <p class="card-text ">
-                                <b>Status: </b>
+                                <b>Tình Trạng: </b>
                                 @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
                                 {
-                                    <span class="badge bg-success text-white">AVAILABLE</span>
+                                    <span class="badge bg-success text-white">ĐANG CHIẾU</span>
                                 }
                                 else if (DateTime.Now > item.EndDate)
                                 {
-                                    <span class="badge bg-danger text-white">EXPIRED</span>
+                                    <span class="badge bg-danger text-white">HẾT HẠN</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-primary text-white">UPCOMING</span>
+                                    <span class="badge bg-primary text-white">SẮP CHIẾU</span>
                                 }
                             </p>
-
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="card-footer ">
+                        <div class="card-footer d-flex justify-content-center">
                             <p class="card-text">
-                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
-                                    <i class="bi bi-eye-fill"></i> Show Details
+                                <a class="btn btn-outline-primary w-100" asp-action="Details" asp-route-id="@item.Id" style="border: 1px solid #545B77;">
+                                    <i class="bi bi-eye-fill"></i> Hiện chi tiết
                                 </a>
-                                <a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")" 
-                                   asp-controller="Orders" 
-                                   asp-action="AddItemToShoppingCart" 
+                                <a class="btn text-white @((DateTime.Now > item.EndDate) ? "disabled" : "") w-100"
+                                   style="background-color: #5C8984 !important; margin-top: 8px;"
+                                   asp-controller="Orders"
+                                   asp-action="AddItemToShoppingCart"
                                    asp-route-id="@item.Id">
-                                <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))</a>
+                                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ (Price @item.Price.ToString("c"))
+                                </a>
                             </p>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 ﻿@model Movie
 
 @{
-    ViewData["Title"] = "Movie details";
+    ViewData["Title"] = "Thông tin chi tiết";
 }
 
 <div class="row">
@@ -74,11 +74,11 @@
                     <div class="card-footer">
                         <p class="card-text">
                             <a class="btn btn-outline-primary float-right" asp-action="Index">
-                                Back to List
+                                Quay lại danh sách
                             </a>
                             <a class="btn btn-success text-white  @((DateTime.Now > Model.EndDate) ? "disabled" : "")" 
                                asp-controller="Orders" 
-                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))</a>
+                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id"><i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng (Price @Model.Price.ToString("c"))</a>
                         </p>
                     </div>
                 </div>
